@@ -104,10 +104,15 @@
             color: white;
             padding: 50px;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .challenge-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .challenge {
@@ -141,6 +146,16 @@
         .connector.active {
             background: green;
         }
+
+        .challenge-content {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .challenge-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -164,29 +179,37 @@
     <button id="begin-button">Begin</button>
 
     <div id="challenges-section">
-        <div class="challenge active">1</div>
-        <div class="connector"></div>
-        <div class="challenge">2</div>
-        <div class="connector"></div>
-        <div class="challenge">3</div>
-        <div class="connector"></div>
-        <div class="challenge">4</div>
-        <div class="connector"></div>
-        <div class="challenge">5</div>
-        <div class="connector"></div>
-        <div class="challenge">6</div>
-        <div class="connector"></div>
-        <div class="challenge">7</div>
-        <div class="connector"></div>
-        <div class="challenge">8</div>
-        <div class="connector"></div>
-        <div class="challenge">9</div>
-        <div class="connector"></div>
-        <div class="challenge">10</div>
-        <div class="connector"></div>
-        <div class="challenge">11</div>
-        <div class="connector"></div>
-        <div class="challenge">12</div>
+        <div class="challenge-container">
+            <div class="challenge active" data-index="0">1</div>
+            <div class="connector"></div>
+            <div class="challenge" data-index="1">2</div>
+            <div class="connector"></div>
+            <div class="challenge" data-index="2">3</div>
+            <div class="connector"></div>
+            <div class="challenge" data-index="3">4</div>
+            <div class="connector"></div>
+            <div class="challenge" data-index="4">5</div>
+        </div>
+
+        <div class="challenge-content" id="challenge-0">
+            <p>"In the land of the blind, the one-eyed man is king." Decode: 01001001</p>
+        </div>
+
+        <div class="challenge-content" id="challenge-1">
+            <p>"The more you take, the more you leave behind. What am I?"</p>
+        </div>
+
+        <div class="challenge-content" id="challenge-2">
+            <p>"Shift the letters of 'GSRH RH Z HVXIVG' back 13 places."</p>
+        </div>
+
+        <div class="challenge-content" id="challenge-3">
+            <p>"Find the prime number hidden in this series: 2, 3, 5, 7, ?"</p>
+        </div>
+
+        <div class="challenge-content" id="challenge-4">
+            <p>"Rearrange the anagram: 'LISTEN' to uncover the secret."</p>
+        </div>
     </div>
 
     <script>
@@ -194,6 +217,7 @@
         const challengesSection = document.getElementById('challenges-section');
         const challenges = document.querySelectorAll('.challenge');
         const connectors = document.querySelectorAll('.connector');
+        const challengeContents = document.querySelectorAll('.challenge-content');
 
         beginButton.addEventListener('click', () => {
             window.scrollTo({
@@ -206,13 +230,19 @@
             challenge.addEventListener('click', () => {
                 if (challenge.classList.contains('active')) {
                     challenge.classList.remove('active');
+                    challengeContents[index].classList.remove('active');
+
                     if (index + 1 < challenges.length) {
                         challenges[index + 1].classList.add('active');
                         connectors[index].classList.add('active');
+                        challengeContents[index + 1].classList.add('active');
                     }
                 }
             });
         });
+
+        // Activate the first challenge's content by default
+        challengeContents[0].classList.add('active');
     </script>
 </body>
 </html>
