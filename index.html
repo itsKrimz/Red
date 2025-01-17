@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptic Red Portal</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            cursor: crosshair;
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 80%;
+        }
+
+        h1, p, #description {
+            position: relative;
+            animation: glitch 1.5s infinite;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: red;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        #description {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #f0f0f0;
+            line-height: 1.5;
+        }
+
+        #twitter-logo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 0, 0, 0.2);
+            border-radius: 50%;
+        }
+
+        #twitter-logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #begin-button {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: black;
+            color: red;
+            border: 2px solid red;
+            border-radius: 5px;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 4;
+            text-shadow: 0 0 5px red, 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        #begin-button:hover {
+            background: red;
+            color: black;
+            border-color: black;
+            transform: translate(-50%, -50%) scale(1.1);
+            text-shadow: 0 0 10px black, 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        #challenges-section {
+            position: absolute;
+            top: 100vh;
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .challenge {
+            width: 50px;
+            height: 50px;
+            background: red;
+            border: 2px solid black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.2;
+            transition: all 0.3s ease;
+        }
+
+        .challenge.active {
+            opacity: 1;
+            background: green;
+        }
+
+        .connector {
+            width: 3px;
+            height: 50px;
+            background: red;
+            transition: background 0.3s ease;
+        }
+
+        .connector.active {
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="fractalCanvas"></canvas>
+
+    <div id="content">
+        <h1>Welcome, Seeker</h1>
+        <p>The answers lie within. Follow the patterns, embrace the unknown.</p>
+        <p>CA: </p>
+        <div id="description">
+            <p>A 12-step odyssey lies before you. Each challenge draws you closer to the ultimate secret: a phrase unlocking the developer's vault. This project, crafted and maintained entirely by AI, tests your wit, determination, and intuition. Begin, and let the journey transform you.</p>
+        </div>
+    </div>
+
+    <div id="twitter-logo">
+        <a href="https://twitter.com/YourTwitterHandle" target="_blank">
+            <div style='width: 40px; height: 40px; background-color: black; color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif; border-radius: 50%; text-decoration: none;'>X</div>
+        </a>
+    </div>
+
+    <button id="begin-button">Begin</button>
+
+    <div id="challenges-section">
+        <div class="challenge active">1</div>
+        <div class="connector"></div>
+        <div class="challenge">2</div>
+        <div class="connector"></div>
+        <div class="challenge">3</div>
+        <div class="connector"></div>
+        <div class="challenge">4</div>
+        <div class="connector"></div>
+        <div class="challenge">5</div>
+        <div class="connector"></div>
+        <div class="challenge">6</div>
+        <div class="connector"></div>
+        <div class="challenge">7</div>
+        <div class="connector"></div>
+        <div class="challenge">8</div>
+        <div class="connector"></div>
+        <div class="challenge">9</div>
+        <div class="connector"></div>
+        <div class="challenge">10</div>
+        <div class="connector"></div>
+        <div class="challenge">11</div>
+        <div class="connector"></div>
+        <div class="challenge">12</div>
+    </div>
+
+    <script>
+        const beginButton = document.getElementById('begin-button');
+        const challengesSection = document.getElementById('challenges-section');
+        const challenges = document.querySelectorAll('.challenge');
+        const connectors = document.querySelectorAll('.connector');
+
+        beginButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: challengesSection.offsetTop,
+                behavior: 'smooth',
+            });
+        });
+
+        challenges.forEach((challenge, index) => {
+            challenge.addEventListener('click', () => {
+                if (challenge.classList.contains('active')) {
+                    challenge.classList.remove('active');
+                    if (index + 1 < challenges.length) {
+                        challenges[index + 1].classList.add('active');
+                        connectors[index].classList.add('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
